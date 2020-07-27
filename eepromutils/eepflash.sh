@@ -5,6 +5,7 @@ FILE="NOT_SET"
 TYPE="NOT_SET"
 BUS="NOT_SET"
 ADDR="NOT_SET"
+yn="ask"
 
 usage()
 {
@@ -26,6 +27,7 @@ usage()
 	echo "		-24c512"
 	echo "		-24c1024"
 	echo ""
+	echo "	-y --yes: answer are you sure prompt with yes"
 	echo "Example:"
 	echo "./eepflash -w -f=crex0.1.eep -t=24c32 -d=1 -a=57"
 	echo "./eepflash -r -f=dump.eep -t=24c32 -d=1 -a=57"
@@ -69,6 +71,9 @@ while [ "$1" != "" ]; do
 		-f | --file)
 			FILE=$VALUE
 			;;
+		-y | --yes)
+			yn="yes"
+			;;
 		*)
 			echo "ERROR: unknown parameter \"$PARAM\""
 			usage
@@ -92,7 +97,7 @@ fi
 echo "This will attempt to talk to an eeprom at i2c address 0x$ADDR on bus $BUS. Make sure there is an eeprom at this address."
 echo "This script comes with ABSOLUTELY no warranty. Continue only if you know what you are doing."
 
-while true; do
+while [ "$yn" = "ask" ]; do
 	read -p "Do you wish to continue? (yes/no): " yn
 	case $yn in
 		yes | Yes ) break;;
