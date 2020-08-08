@@ -17,10 +17,11 @@ while [ $i -ne 0 ]; do
     ((x+=1))
     if [ $i -eq 0 ]; then
       echo SUCCESS!
+      grep uuid readback.txt
       exit
     fi
     echo flashing epdf.eep to eeprom on hat attempt $x
-    ####--./eepflash.sh -t=24c32 -w -y -f=epdf.eep 
+    ./eepflash.sh -t=24c32 -w -y -f=epdf.eep >/dev/null
     #if not, reflash until a success is seen.
     sleep 1 
  done
